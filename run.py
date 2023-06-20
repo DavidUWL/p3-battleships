@@ -3,37 +3,42 @@ import numpy as np
 
 class player:  
     def __init__(self):
-        self.picks = []
+        self.boat_coordinates = []
         self.board = np.full((5, 5), "*")
 
 player1 = player()
+
+
 player2 = player()
 
-print(player1.board)
-print("\n --------------------- \n")
-print(player2.board)
+
+def update_UI():
+    print(player1.board)
+    print("\n --------------------- \n")
+    print(player2.board)
+
+
+def get_boat_coordinates():
+    i = 1
+    while i < 6:
+        y = int(input("pick a row from 1-5:"))
+        coordinate_validation(y)
+        x = int(input("pick a column from 1-5:"))
+        coordinate_validation(x)
+        c = [y, x]
+        player1.boat_coordinates.append(c)
+        i += 1
+    print(player1.boat_coordinates)
+
+
+def coordinate_validation(value):
+    while value < 1 or value > 5:
+        print("Choose between 1-5.")
+        value = int(input("pick a row from 1-5:"))
+
+
+update_UI()
+get_boat_coordinates()
 
 
 
-# def game_initialize():
-#     player1 = player()
-#     player2 = player()
-#     player1.construct_board()
-#     player2.construct_board()
-#     return player1, player2
-
-
-# def update_UI():
-#     print(np.array(player1.board))
-#     print(np.array(player2.board))
-
-
-
-
-
-
-
-
-# player1, player2 = game_initialize()
-# get_user_picks()
-# # update_UI()
