@@ -22,9 +22,9 @@ def get_boat_coordinates():
     i = 1
     while i < 6:
         y = int(input("pick a row from 1-5:"))
-        coordinate_validation(y)
+        y = coordinate_validation(y)
         x = int(input("pick a column from 1-5:"))
-        coordinate_validation(x)
+        x = coordinate_validation(x)
         c = [y, x]
         player1.boat_coordinates.append(c)
         i += 1
@@ -35,10 +35,9 @@ def coordinate_validation(value):
     while value < 1 or value > 5:
         print("Choose between 1-5.")
         value = int(input("pick a row from 1-5:"))
+    return value
 
 
 update_UI()
 get_boat_coordinates()
-
-
 
