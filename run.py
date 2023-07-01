@@ -1,12 +1,13 @@
 
 import numpy as np
-
+import random 
 
 class player:  
     def __init__(self):
         self.boat_coordinates = np.empty((0, 2))
         self.artillery_coordinates = np.empty((0, 2))
         self.board = np.full((5, 5), "*")
+        self.score = 0
         self.boat = {
             "boat1": {
                 "icon": "#",
@@ -26,7 +27,6 @@ class player:
 
 
 player1 = player()
-
 
 player2 = player()
 
@@ -92,12 +92,32 @@ def check_hits(player):
     return player.board
 
 
+def get_computer_boat_coordinates(player):
+    i = 0
+    while i < 5:
+        while True:
+            computer_boat_coordinates = random.sample(range(0, 4), 2)
+            if not any(np.array_equal(computer_boat_coordinates, coord) for coord in player.boat_coordinates):
+                player.boat_coordinates = np.append(player.boat_coordinates, [computer_boat_coordinates], axis=0)
+                break
+        i += 1
+    return player.boat_coordinates
+
+
+
+# def computer_call_artillery():
+#     computer_row = random.randint(0, 4)
+#     computer_column = random.randint(0, 4)
+
+
+
 
 update_UI()
 get_boat_coordinates()
-# print(player1.boat_coordinates)
+get_computer_boat_coordinates(player2)
 plot_coordinates(player1, player1.boat_coordinates)
 update_UI()
 call_artillery(player1, player1.artillery_coordinates)
 update_UI()
+
 
