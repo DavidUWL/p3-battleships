@@ -4,6 +4,7 @@ import random
 
 class player:  
     def __init__(self):
+        self.name = ""
         self.boat_coordinates = np.empty((0, 2))
         self.artillery_coordinates = np.empty((0, 2))
         self.board = np.full((5, 5), "*")
@@ -25,18 +26,23 @@ class player:
         }
  
 
-
 player1 = player()
 
 player2 = player()
 
 
+def get_names(player, second_player):   # THIS NEEDS VALIDATION FOR STRING LENGTH
+    name = input("what is your name captain? \n type your name:")
+    second_name = input("And what is your enemies name? \n type your enemies name:")
+    print("Here is your board captain %s! \n your boats are shown as #" %name)
+    player.name = name
+    second_player.name = second_name
+
+
 def update_UI():
-    check_hits(player1, player2)
-    check_hits(player2, player1)
-    print(player2.board)
+    clean_player_boards(player2)
     print("\n --------------------- \n")
-    print(player1.board)
+    clean_player_boards(player1)
 
 
 def get_boat_coordinates():
@@ -54,10 +60,10 @@ def get_boat_coordinates():
     return player1.boat_coordinates
 
 
-def coordinate_validation(value):
+def coordinate_validation(value):  # needs revisiting as not validating correctly
     while value < 1 or value > 5:
         print("Choose between 1-5.")
-        value = int(input("pick a row from 1-5:")) - 1
+        value = int(input("pick a row from 1-5:"))
     return value
 
 
@@ -80,12 +86,15 @@ def call_artillery(player):
     x = x - 1  # subtracting 1 for zero indexing
     c = np.array([[y, x]])
     player.artillery_coordinates = np.append(player.artillery_coordinates, c, axis=0)
-    # print(player1.artillery_coordinates)
+    return player.artillery_coordinates
+    
 
     
 def check_hits(player_boats, player_artillery):
-    direct_hits = np.where(np.all(player_artillery.artillery_coordinates == player_boats.boat_coordinates[:, None], axis=2))
-    misses = np.where(np.all(player_artillery.artillery_coordinates != player_boats.boat_coordinates[:, None], axis=2))
+    direct_hits = np.where(np.all(player_artillery.artillery_coordinates == player_boats.boat_coordinates, axis=0))
+    misses = np.where(np.all(player_artillery.artillery_coordinates != player_boats.boat_coordinates, axis=0))
+    print(direct_hits)
+    print(misses)
     
     for i in range(len(direct_hits[0])):
         row = int(direct_hits[0][i])
@@ -97,8 +106,7 @@ def check_hits(player_boats, player_artillery):
         column = int(misses[1][i])
         player_artillery.board[row, column] = "~"
     return player_boats.board
-    print(direct_hits)
-    print(misses)
+    
 
 
 def get_computer_boat_coordinates(player):
@@ -113,7 +121,6 @@ def get_computer_boat_coordinates(player):
     return player.boat_coordinates
 
 
-
 def computer_call_artillery(player):
     while True:
         computer_artillery = random.sample(range(0, 4), 2)
@@ -124,6 +131,10 @@ def computer_call_artillery(player):
     return player.artillery_coordinates
     
 
+def clean_player_boards(player):
+    cleaned_board = np.array2string(player.board, separator=', ', formatter={'int': lambda x: f'{x:2d}'})
+    cleaned_board = cleaned_board.replace('[', '').replace(']', '').replace(',', '').replace("'", '')
+    print("  ", player.name, "\n", cleaned_board)
 
 
 
@@ -131,15 +142,22 @@ def computer_call_artillery(player):
 
 
 
+
+get_names(player1, player2)
 update_UI()
 get_boat_coordinates()
 get_computer_boat_coordinates(player2)
 plot_coordinates(player1, player1.boat_coordinates)
 update_UI()
-print(player2.boat_coordinates)
+print("player1 boat coordinates: \n", player1.boat_coordinates)
+print("player2 boat coordinates: \n", player2.boat_coordinates)
 call_artillery(player1)
-computer_call_artillery(player2)
+print(player1.artillery_coordinates)
+check_hits(player2, player1)
 update_UI()
-print(player1.artillery_coordinates, player2.artillery_coordinates)
+computer_call_artillery(player2)
+check_hits(player1, player2)
+update_UI()
+print("player1 fires at: \n", player1.artillery_coordinates, "\n player2 fires at: \n", player2.artillery_coordinates)
 
 
