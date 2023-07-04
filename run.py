@@ -5,24 +5,40 @@ import random
 class player:  
     def __init__(self):
         self.name = ""
-        self.boat_coordinates = np.empty((0, 2))
-        self.artillery_coordinates = np.empty((0, 2))
-        self.board = np.full((5, 5), "*")
-        self.score = 0
+        self.boat_coordinates = np.empty((5, 5), dtype=object)
+        self.artillery_coordinates = np.empty((5, 5), dtype=object)
+        self.board = np.full((5, 5), "*", dtype=object)
         self.boat = {
             "boat1": {
                 "icon": "#",
-                "damaged_icon": "X",
+                "damaged_icon": np.array(["X"], dtype=str),
                 "length": 4,
                 "hit": False
             },
-
             "boat2": {
                 "icon": "@",
-                "damaged_icon": "X",
+                "damaged_icon": np.array(["X"], dtype=str),
                 "length": 2,
                 "hit": False
-            }
+            },
+            "boat3": {
+                "icon": "#",
+                "damaged_icon": np.array(["X"], dtype=str),
+                "length": 1,
+                "hit": False
+            },
+            "boat4": {
+                "icon": "#",
+                "damaged_icon": np.array(["X"], dtype=str),
+                "length": 5,
+                "hit": False
+            },
+            "boat5": {
+                "icon": "#",
+                "damaged_icon": np.array(["X"], dtype=str),
+                "length": 3,
+                "hit": False
+            },
         }
  
 
@@ -45,7 +61,7 @@ def update_UI():
     clean_player_boards(player1)
 
 
-def get_boat_coordinates():
+def get_boat_coordinates(player):
     i = 1
     while i < 6:
         y = int(input("pick a row from 1-5:")) 
@@ -54,10 +70,9 @@ def get_boat_coordinates():
         x = coordinate_validation(x)
         y = y - 1  # subtracting 1 for zero indexing
         x = x - 1  # subtracting 1 for zero indexing
-        c = np.array([[y, x]])
-        player1.boat_coordinates = np.append(player1.boat_coordinates, c, axis=0)
+        player.boat_coordinates[y, x] = player.boat["boat1"]["icon"]
         i += 1
-    return player1.boat_coordinates
+    return player.boat_coordinates
 
 
 def coordinate_validation(value):  # needs revisiting as not validating correctly
@@ -67,55 +82,46 @@ def coordinate_validation(value):  # needs revisiting as not validating correctl
     return value
 
 
-def plot_coordinates(player, boat_coordinates):
-    for i in range(boat_coordinates.shape[0]):
-        row = int(boat_coordinates[i, 0])
-        column = int(boat_coordinates[i, 1])
-        player.board[row, column] = player.boat["boat1"]["icon"]
+def plot_coordinates(player):
+    for i in range(player.boat_coordinates.shape[0]):
+        for j in range(player.board.shape[1]):
+            if player.boat_coordinates[i, j] == '#':
+                player.board[i, j] = '#'
     # print(player.boat_coordinates)
     return player.board
 
 
 def call_artillery(player):
     print("Call your artillery shot!")
+
     y = int(input("pick a row from 1-5:")) 
     y = coordinate_validation(y)
+
     x = int(input("pick a column from 1-5:")) 
     x = coordinate_validation(x)
+
     y = y - 1  # subtracting 1 for zero indexing
     x = x - 1  # subtracting 1 for zero indexing
-    c = np.array([[y, x]])
-    player.artillery_coordinates = np.append(player.artillery_coordinates, c, axis=0)
+
+    player.artillery_coordinates[y, x] = '!'
     return player.artillery_coordinates
     
 
+def check_hits(artillery, boat):
+    hit = np.logical_and(artillery.artillery_coordinates == "!", boat.boat_coordinates == '#')
+    miss = np.logical_and(artillery.artillery_coordinates == "!", np.logical_not(boat.boat_coordinates == "#"))
+    boat.board[hit] = boat.boat["boat1"]["damaged_icon"]
+    boat.board[miss] = '~'
     
-def check_hits(player_boats, player_artillery):
-    direct_hits = np.where(np.all(player_artillery.artillery_coordinates == player_boats.boat_coordinates, axis=0))
-    misses = np.where(np.all(player_artillery.artillery_coordinates != player_boats.boat_coordinates, axis=0))
-    print(direct_hits)
-    print(misses)
-    
-    for i in range(len(direct_hits[0])):
-        row = int(direct_hits[0][i])
-        column = int(direct_hits[1][i])
-        player_boats.board[row, column] = player_boats.boat["boat1"]["damaged_icon"]
-    
-    for i in range(len(misses[0])):
-        row = int(misses[0][i])
-        column = int(misses[1][i])
-        player_artillery.board[row, column] = "~"
-    return player_boats.board
-    
-
 
 def get_computer_boat_coordinates(player):
     i = 0
     while i < 5:
         while True:
-            computer_boat_coordinates = random.sample(range(0, 4), 2)
-            if not any(np.array_equal(computer_boat_coordinates, coord) for coord in player.boat_coordinates):
-                player.boat_coordinates = np.append(player.boat_coordinates, [computer_boat_coordinates], axis=0)
+            y = random.randint(0, 4)
+            x = random.randint(0, 4)
+            if player.boat_coordinates[y, x] != player.boat["boat1"]["icon"]:
+                player.boat_coordinates[y, x] = player.boat["boat1"]["icon"]
                 break
         i += 1
     return player.boat_coordinates
@@ -123,11 +129,11 @@ def get_computer_boat_coordinates(player):
 
 def computer_call_artillery(player):
     while True:
-        computer_artillery = random.sample(range(0, 4), 2)
-        if not any(np.array_equal(computer_artillery, coord) for coord in player.artillery_coordinates):
-            player.artillery_coordinates = np.append(player.artillery_coordinates, [computer_artillery], axis=0)
+        y = random.randint(0, 4)
+        x = random.randint(0, 4)
+        if player.artillery_coordinates[y, x] != "!":
+            player.artillery_coordinates[y, x] = '!'
             break
-        
     return player.artillery_coordinates
     
 
@@ -145,19 +151,20 @@ def clean_player_boards(player):
 
 get_names(player1, player2)
 update_UI()
-get_boat_coordinates()
+get_boat_coordinates(player1)
 get_computer_boat_coordinates(player2)
-plot_coordinates(player1, player1.boat_coordinates)
+plot_coordinates(player1)
+plot_coordinates(player2)
 update_UI()
-print("player1 boat coordinates: \n", player1.boat_coordinates)
-print("player2 boat coordinates: \n", player2.boat_coordinates)
+# print("player1 boat coordinates: \n", player1.boat_coordinates)
+# print("player2 boat coordinates: \n", player2.boat_coordinates)
 call_artillery(player1)
 print(player1.artillery_coordinates)
-check_hits(player2, player1)
-update_UI()
-computer_call_artillery(player2)
 check_hits(player1, player2)
 update_UI()
-print("player1 fires at: \n", player1.artillery_coordinates, "\n player2 fires at: \n", player2.artillery_coordinates)
+computer_call_artillery(player2)
+print(player2.artillery_coordinates)
+check_hits(player2, player1)
+update_UI()
 
 
