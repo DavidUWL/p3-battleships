@@ -50,22 +50,29 @@ def new_game():
     # random.seed()
 
 
-    def get_names(player, second_player):   # THIS NEEDS VALIDATION FOR STRING LENGTH
+    def get_names(player, second_player):   # gets each players name and assigns to player.name
         name = input("what is your name captain? \n type your name:")
+        
+        while len(name) > 10:
+            print("Captain your name is too long!")
+            name = input("Choose a shorter name:")
+        clear()                             # clears the terminal
+
         second_name = input("And what is your enemies name? \n type your enemies name:")
         print("Here is your board captain %s! \n your boats are shown as #" %name)
-        player.name = name
+
+        player.name = name                  # assigns names to the player class
         second_player.name = second_name
 
 
-    def update_UI():
+    def update_UI():                        # formats the arrays to remove array containers and prints them with a divider
         clear()
         clean_player_boards(player2)
         create_divider(player1.board)
         clean_player_boards(player1)
 
 
-    def get_boat_coordinates(player):
+    def get_boat_coordinates(player):       # takes inputs from the 
         i = 1
         while i < 6:
             y = int(input("pick a row from 1-5:")) 
@@ -76,6 +83,7 @@ def new_game():
             x = x - 1  # subtracting 1 for zero indexing
             player.boat_coordinates[y, x] = player.boat["boat1"]["icon"]
             i += 1
+            update_UI()
         return player.boat_coordinates
 
 
@@ -164,18 +172,26 @@ def new_game():
 
 
     def check_for_winner(player1, player2):
-        p1_bool_boat_coord = np.all(player1.boat_coordinates == "#")
-        p2_bool_boat_coord = np.all(player2.boat_coordinates == "#")
+        p1_bool_boat_coord = player1.boat_coordinates == "#"
+        p2_bool_boat_coord = player2.boat_coordinates == "#"
 
         p1_hits = np.logical_and(player1.artillery_coordinates == "!", player2.boat_coordinates == "#")
-        p1_winner_clause = np.all(p1_hits & p2_bool_boat_coord)
+        p1_winner_clause = np.all(np.equal(p1_hits, p2_bool_boat_coord))
 
         p2_hits = np.logical_and(player2.artillery_coordinates == "!", player1.boat_coordinates == "#")
-        p2_winner_clause = np.all(p2_hits & p1_bool_boat_coord)
+        p2_winner_clause = np.all(np.equal(p2_hits, p1_bool_boat_coord))
+
+        # print(p1_bool_boat_coord)
+        # print(p2_bool_boat_coord)
+        # print(p1_hits)
+        # print(p2_hits)
+        # print(p1_winner_clause)
+        # print(p2_winner_clause)
+
 
         while not (p1_winner_clause or p2_winner_clause):
             loop_game()
-        if p1_winner_clause and p2_winner_clause:
+        if  (p1_winner_clause and p2_winner_clause):
             print("The game is a tie.")
             prompt_new_game()
         elif p1_winner_clause:
