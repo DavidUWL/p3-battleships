@@ -72,25 +72,36 @@ def new_game():
         clean_player_boards(player1)
 
 
-    def get_boat_coordinates(player):       # takes inputs from the 
+    def get_boat_coordinates(player):       # takes inputs from the player to assign coordinates for boats
         i = 1
         while i < 6:
             y = int(input("pick a row from 1-5:")) 
             y = coordinate_validation(y)
             x = int(input("pick a column from 1-5:")) 
             x = coordinate_validation(x)
-            y = y - 1  # subtracting 1 for zero indexing
-            x = x - 1  # subtracting 1 for zero indexing
+            print(y)
+            y = y - 1                       # subtracting 1 for zero indexing
+            x = x - 1                       # subtracting 1 for zero indexing
             player.boat_coordinates[y, x] = player.boat["boat1"]["icon"]
             i += 1
             update_UI()
         return player.boat_coordinates
 
 
-    def coordinate_validation(value):  # needs revisiting as not validating correctly
-        while value < 1 or value > 5:
-            print("Choose between 1-5.")
+    def coordinate_validation(value):  # validates
+        while True:
+            try:
+                value = int(value)
+                if value < 1 or value > 5:
+                    print("Choose between 1 and 5.")
+                else:
+                    break
+                
+            except ValueError:
+                print("Have you forgotten numbers captain!?")
+            
             value = int(input("pick a row from 1-5:"))
+            print(value)
         return value
 
 
@@ -191,7 +202,7 @@ def new_game():
 
         while not (p1_winner_clause or p2_winner_clause):
             loop_game()
-        if  (p1_winner_clause and p2_winner_clause):
+        if (p1_winner_clause and p2_winner_clause):
             print("The game is a tie.")
             prompt_new_game()
         elif p1_winner_clause:
