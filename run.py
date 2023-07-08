@@ -1,4 +1,3 @@
-
 import numpy as np
 import random 
 from os import system
@@ -225,32 +224,31 @@ def new_game():
 
 
     def splash_ascii():
-        logo = """###             ##     ##     ###                      ###        ##                      
+        logo = """  ###               ##     ##    ###                     ###                      
   ##                ##     ##     ##                     ##                               
-  ##               #####  #####   ##    ####    #####    ##       ###    ######    #####  
-  #####    ####     ##     ##     ##   ##  ##  ##        #####     ##     ##  ##  ##      
-  ##  ##  #    #    ##     ##     ##   ######   #####    ##  ##    ##     ##  ##   #####  
-  ##  ##  #   ##    ## ##  ## ##  ##   ##           ##   ##  ##    ##     #####        ## 
- ######    ### #     ###    ###  ####   #####  ######   ###  ##   ####    ##      ######  
+  ##               #####  #####   ##    ####    #####    ##       ###    ######
+  #####    ####     ##     ##     ##   ##  ##  ##        #####     ##     ##  ##  
+  ##  ##  #    #    ##     ##     ##   ######   #####    ##  ##    ##     ##  ##
+  ##  ##  #   ##    ## ##  ## ##  ##   ##           ##   ##  ##    ##     #####
+ ######    ### #     ###    ###  ####   #####  ######   ###  ##   ####    ## 
                                                             ####       """
         print(logo)
 
 
 
-    player1 = Player()
-    player2 = Player()
-    splash_ascii()
-    get_names(player1, player2)
-    update_UI()
+    def begin_game():
+        player1 = Player()
+        player2 = Player()
+        splash_ascii()
+        get_names(player1, player2)
+        update_UI()
+        get_boat_coordinates(player1)
+        get_computer_boat_coordinates(player2)
+        plot_coordinates(player1)
+        update_UI()
+        loop_game()
 
-    get_boat_coordinates(player1)
-    get_computer_boat_coordinates(player2)
-
-    plot_coordinates(player1)
-
-    update_UI()
-    loop_game()
-
+    begin_game()    
 
 new_game()
 
