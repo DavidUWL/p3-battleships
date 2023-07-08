@@ -1,0 +1,1 @@
+print("Here is your board captain %s! \n your boats are shown as #" % name
