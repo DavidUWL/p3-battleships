@@ -1,7 +1,8 @@
 import numpy as np
-import random 
+import random
 from os import system
 import time
+
 
 def clear():  #clears terminal/python shell
     system("clear")
@@ -46,8 +47,11 @@ class Player:
             },
         }
  
+
 def new_game():
-    # random.seed()
+
+    player1 = Player()
+    player2 = Player()
 
 
     def get_names(player, second_player):   # gets each players name and assigns to player.name
@@ -65,15 +69,13 @@ def new_game():
         second_player.name = second_name
 
 
-    def update_UI():
-        plot_coordinates(player1)
-        plot_coordinates(player2)                     
+    def update_UI():                        #updates the visual's/board
+        plot_coordinates(player1)                    
         clear()
         splash_ascii()
         clean_player_boards(player2)
         create_divider(player1.board)
         clean_player_boards(player1)
-
 
 
     def get_boat_coordinates(player):       # takes inputs from the player to assign coordinates for boats
@@ -106,35 +108,43 @@ def new_game():
         return value
 
 
-    def plot_coordinates(player):
+    def plot_coordinates(player):          # plots the boats into the players boat_coardinates and pushes to respective board
         for i in range(player.boat_coordinates.shape[0]):
             for j in range(player.board.shape[1]):
                 if player.boat_coordinates[i, j] == '#':
                     player.board[i, j] = '#'
-        # print(player.boat_coordinates)
         return player.board
 
 
-    def call_artillery(player):
+    def call_artillery(player):            # takes validated input from the player and pushes to their artillery coordinates
         print("Call your artillery shot!")
-        y = coordinate_validation(int(input("pick a row from 1-5:")))
-        x = coordinate_validation(int(input("pick a column from 1-5:")))
+        y = coordinate_validation(input("pick a row from 1-5:"))
+        x = coordinate_validation(input("pick a column from 1-5:"))
 
         y = y - 1  # subtracting 1 for zero indexing
         x = x - 1  # subtracting 1 for zero indexing
 
+        while True:
+            if player.artillery_coordinates[y, x] == "!":
+                print("You have already hit that coordinate!")
+                y = coordinate_validation(input("pick a row from 1-5:"))
+                x = coordinate_validation(input("pick a column from 1-5:"))
+                return x, y
+            else:
+                break
+        
         player.artillery_coordinates[y, x] = '!'
         return player.artillery_coordinates
 
 
-    def check_hits(artillery, boat):
+    def check_hits(artillery, boat):       # checks whether the artillery coordinate matches a boat coordinates and changes value accordingly
         hit = np.logical_and(artillery.artillery_coordinates == "!", boat.boat_coordinates == '#')
         miss = np.logical_and(artillery.artillery_coordinates == "!", np.logical_not(boat.boat_coordinates == "#"))
         boat.board[hit] = boat.boat["boat1"]["damaged_icon"]
         boat.board[miss] = '~'
 
 
-    def get_computer_boat_coordinates(player):
+    def get_computer_boat_coordinates(player):  # randomely generates validated locations for computer boats 
         i = 0
         while i < 5:
             while True:
@@ -147,30 +157,30 @@ def new_game():
         return player.boat_coordinates
 
 
-    def computer_call_artillery(player):
+    def computer_call_artillery(player):    # generates location for computer artillery, validates if choosing same location twice and regenerates
         while True:
             y = random.randint(0, 4)
             x = random.randint(0, 4)
             if player.artillery_coordinates[y, x] != "!":
                 player.artillery_coordinates[y, x] = '!'
                 break
-        time.sleep(1)
+        time.sleep(1)   # 1 second wait time before code executes to delay gameplay
         return player.artillery_coordinates
 
 
-    def clean_player_boards(player):
+    def clean_player_boards(player):    # removes unwanted characters when printing 
         cleaned_board = np.array2string(player.board, separator=', ', formatter={'int': lambda x: f'{x:2d}'})
         cleaned_board = cleaned_board.replace('[', '').replace(']', '').replace(',', '').replace("'", '')
         print("  ", player.name, "\n", cleaned_board)
 
 
-    def create_divider(array):
+    def create_divider(array):   # creates a divider set to the length of the board row - will work regardless of board size initialised 
         row_length = array.shape[1]
         divider_line = ' -' * row_length
         print(divider_line)
 
 
-    def loop_game():
+    def loop_game():    # game structure loop that runs while condition is not met
         call_artillery(player1)
         check_hits(player1, player2)
         update_UI()
@@ -180,7 +190,7 @@ def new_game():
         check_for_winner(player1, player2)
 
 
-    def check_for_winner(player1, player2):
+    def check_for_winner(player1, player2):     # when boards converted to boolean, gives loop_game function a condition to loop over
         p1_bool_boat_coord = player1.boat_coordinates == "#"
         p2_bool_boat_coord = player2.boat_coordinates == "#"
 
@@ -236,9 +246,7 @@ def new_game():
 
 
 
-    def begin_game():
-        player1 = Player()
-        player2 = Player()
+    def begin_game():    # initial call of game functions to begin loop 
         splash_ascii()
         get_names(player1, player2)
         update_UI()
@@ -248,7 +256,9 @@ def new_game():
         update_UI()
         loop_game()
 
-    begin_game()    
+    begin_game()
+
 
 new_game()
+    
 
