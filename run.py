@@ -2,12 +2,13 @@
 import numpy as np
 import random 
 from os import system
+import time
 
 def clear():  #clears terminal/python shell
     system("clear")
 
 
-class player:  
+class Player:  
     def __init__(self):
         self.name = ""
         self.boat_coordinates = np.empty((5, 5), dtype=object)
@@ -57,7 +58,7 @@ def new_game():
             print("Captain your name is too long!")
             name = input("Choose a shorter name:")
         clear()                             # clears the terminal
-
+        splash_ascii()
         second_name = input("And what is your enemies name? \n type your enemies name:")
         print("Here is your board captain %s! \n your boats are shown as #" %name)
 
@@ -65,20 +66,22 @@ def new_game():
         second_player.name = second_name
 
 
-    def update_UI():                        # formats the arrays to remove array containers and prints them with a divider
+    def update_UI():
+        plot_coordinates(player1)
+        plot_coordinates(player2)                     
         clear()
+        splash_ascii()
         clean_player_boards(player2)
         create_divider(player1.board)
         clean_player_boards(player1)
 
 
+
     def get_boat_coordinates(player):       # takes inputs from the player to assign coordinates for boats
         i = 1
         while i < 6:
-            y = int(input("pick a row from 1-5:")) 
-            y = coordinate_validation(y)
-            x = int(input("pick a column from 1-5:")) 
-            x = coordinate_validation(x)
+            y = coordinate_validation(input("pick a row from 1-5:"))
+            x = coordinate_validation(input("pick a column from 1-5:"))
             print(y)
             y = y - 1                       # subtracting 1 for zero indexing
             x = x - 1                       # subtracting 1 for zero indexing
@@ -88,20 +91,19 @@ def new_game():
         return player.boat_coordinates
 
 
-    def coordinate_validation(value):  # validates
-        while True:
+    def coordinate_validation(value):       # validates coordinates chosen for boats
+        while True:       
             try:
                 value = int(value)
                 if value < 1 or value > 5:
                     print("Choose between 1 and 5.")
                 else:
                     break
-                
+
             except ValueError:
                 print("Have you forgotten numbers captain!?")
-            
-            value = int(input("pick a row from 1-5:"))
-            print(value)
+
+            value = input("choose from 1-5:")
         return value
 
 
@@ -116,12 +118,8 @@ def new_game():
 
     def call_artillery(player):
         print("Call your artillery shot!")
-
-        y = int(input("pick a row from 1-5:")) 
-        y = coordinate_validation(y)
-
-        x = int(input("pick a column from 1-5:")) 
-        x = coordinate_validation(x)
+        y = coordinate_validation(int(input("pick a row from 1-5:")))
+        x = coordinate_validation(int(input("pick a column from 1-5:")))
 
         y = y - 1  # subtracting 1 for zero indexing
         x = x - 1  # subtracting 1 for zero indexing
@@ -157,6 +155,7 @@ def new_game():
             if player.artillery_coordinates[y, x] != "!":
                 player.artillery_coordinates[y, x] = '!'
                 break
+        time.sleep(1)
         return player.artillery_coordinates
 
 
@@ -224,10 +223,22 @@ def new_game():
         else:
             prompt_new_game()
 
+    def splash_ascii():
+        logo = """ ###                 ##       ##      ###                       ###        ##                      
+  ##                 ##       ##       ##                        ##                                
+  ##                #####    #####     ##      ####     #####    ##       ###     ######    #####  
+  #####    ####      ##       ##       ##     ##  ##   ##        #####     ##      ##  ##  ##      
+  ##  ##  #    #     ##       ##       ##     ######    #####    ##  ##    ##      ##  ##   #####  
+  ##  ##  #   ##     ## ##    ## ##    ##     ##            ##   ##  ##    ##      #####        ## 
+ ######    ### #      ###      ###    ####     #####   ######   ###  ##   ####     ##      ######  
+                                                                                  ####       """
+        print(logo)
 
-    player1 = player()
-    player2 = player()
-    
+
+
+    player1 = Player()
+    player2 = Player()
+    splash_ascii()
     get_names(player1, player2)
     update_UI()
 
@@ -235,7 +246,6 @@ def new_game():
     get_computer_boat_coordinates(player2)
 
     plot_coordinates(player1)
-    plot_coordinates(player2)
     update_UI()
     loop_game()
 
