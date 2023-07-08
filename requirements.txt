@@ -1,2 +1,1 @@
-# Your requirements go here
-pip install numpy
+numpy==1.24.4
