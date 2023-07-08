@@ -252,7 +252,7 @@ def new_game():
             clear()
             new_game()
         elif start_new_game == "N":
-            sys.exit()
+            system.exit()
         else:
             prompt_new_game()
 
