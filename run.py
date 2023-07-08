@@ -8,7 +8,7 @@ def clear():  #clears terminal/python shell
     system("clear")
 
 
-class Player:  
+class Player:                    
     def __init__(self):
         self.name = ""
         self.boat_coordinates = np.empty((5, 5), dtype=object)
@@ -18,7 +18,7 @@ class Player:
             "boat1": {
                 "icon": "#",
                 "damaged_icon": np.array(["X"], dtype=str),
-                "length": 4,
+                "length": 4,  
                 "hit": [False, False, False, False, False]
             },
             "boat2": {
