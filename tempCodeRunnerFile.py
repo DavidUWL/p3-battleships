@@ -1,6 +1,0 @@
-        # print(p1_bool_boat_coord)
-        # print(p2_bool_boat_coord)
-        # print(p1_hits)
-        # print(p2_hits)
-        # print(p1_winner_clause)
-        # print(p2_winner_clause)
