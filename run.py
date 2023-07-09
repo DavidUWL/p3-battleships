@@ -1,7 +1,8 @@
-import numpy as np
+# imports for packages
 import random
 from os import system
 import time
+import numpy as np
 
 
 def clear():  # clears terminal/python shell
@@ -57,23 +58,31 @@ def new_game():
         player, player2
     ):  # gets each players name and assigns to player.name
         name = input("what is your name captain? \n type your name:")
-
+        name = empty_string_validation(name)
         while len(name) > 10:
             print("Captain your name is too long!")
             name = input("Choose a shorter name:")
         clear()  # clears the terminal
         splash_ascii()
         player2_name = input("And what is your enemies name? \n type your enemies name:")
+        player2_name = empty_string_validation(player2_name)
 
         while len(player2_name) > 10:
             print("Are you sure thats the enemy?")
             player2_name = input("Choose a shorter name:")
         print("Here is your board, captain %s! \n your boats are shown as #" % player2_name)
         print("Misses are shown as ~")
+        print("hits are shown as X")
         time.sleep(3)
 
         player.name = name  # assigns names to the player class
         player2.name = player2_name
+
+    def empty_string_validation(name): 
+        while name.strip() == "":
+            print("I can't hear you captain!")
+            name = input("Choose a longer name:")
+        return name
 
     def update_UI():  # updates the boards visuals
         plot_coordinates(player1)

@@ -8,9 +8,7 @@ A web based terminal game for a player to play against a computer in a game of b
   * [Initial Discussion](#initial-discussion)
   * [User Stories](#user-stories)
 * [Design](#design)
-  * [Colour Palette](#colour-palette)
-  * [Typography](#typography)
-  * [Imagery](#imagery)
+  * [Flow Chart Planning](#flow-chart-planning)
   * [Features](#features)
 * [Technologies Used](#technologies-used)
   * [Languages Used](#languages-used)
@@ -34,147 +32,37 @@ this is a digital rendition of the classic board game.
  
 
 ### User Stories
-#### First Time Visitor Goals
-* To quickly be able to see the rules and play the game.
-* Have a sense of familiarity with rock paper scissors but learn the extra complexity of the extra two choices.
-#### Returning Visitor Goals
-*  To be able to quickly access the game without needing to read the rules beforehand. 
+#### First Time Player Goals
+* To quickly be able to play the game without knowing the rules.
+* for quick gameplay to be carried out, resulting in a fast-paced rewarding feeling when played. 
+#### Returning Player Goals
+* To be able to play a different game-set everytime - with the computer choosing different locations/artillery calls every game.
 
 
 ## Design
-### Colour Palette 
-![Picture of color palette](assets/images/readme-images/color-palette.png)
-I create the page with a darker purple overall background, this allows the foreground to stand out and in front when information is changing. With the blue text and white borders, i think its pops a little bit better. The color palette image was created with the [Coolors](http://www.coolors.co) website.
+As this game was created to be played via the terminal, there are limitations as to the customisation of the design. With this particular deployment, the terminal window is limited to
+80 characters in length, with a restriction of 24 rows in height. Because of these limitations, the main focus would be the board and the ASCII art banner. With only a small amount of 
+on screen information, this allows the player to not be distracted and continue focus on the game. 
 
-### Typography 
-The font Roboto was imported using google fonts.
+### Flow Chart Planning
+![flow chart for visual updates logic](assets/readME_images/flow_chart1.png)\
+When designing how the game would update visuals and process input, i decided on doing a stacked visual process. This allows the game to do all proccessing in the backend without
+disturbing/interrupting the games visuals. This seperation of game-states also makes writing the logic substantially easier. 
 
-### Imagery
-The images on this site have been granted permission from the owners. They have been credited in the [Credits](#Credits) section.
-
-### Features
-The website is made up of three pages:
-* Home Page
-* Rules Page
-* Game page
-
-
-This sites navigation is done through two methods:
-
-  
-![picture of home screen navigation](assets/images/readme-images/home-page-navigation.png)
-  the home page has two buttons for navigation, giving it a game like feel
-![picture of rules page navigation](assets/images/readme-images/rules-page-navigation.png)
-The rules page contains a navigation bar. 
-
-* Home Screen
-  * The Home screen displays an image that catches the eye with bright colours against the darker background, and also explains the win conditions of the game. 
-  * There are two buttons for navigation, with interactive styling, giving a game like feel as soon as the user visits the site. 
-  * The home page is quite minimalist, making the user feel like they are at the title screen of a video game about to press start. 
-  ![picture of home page button interaction](assets/images/readme-images/home-page-buttons.png) 
-  
-* Rules Page
-  * The Rules page, similiar to the home page is kept quite minimal. A quick explanation of how to play and how the winner is decided and any extra features are described, this allows the player to quickly get into the game without having to spend too long reading, this keeps the user on the site before they become bored. 
-  * The rules page explains one key feature accompanied by an image describing how the player can play against the computer instead of another player. 
-
-* Game Page <br>
-The Game page in keeping style with the minimalist look, allows the player to focus on just the game and not be distracted by the webpage or browser. The below outlines the features of the game page.
-  ![picture of game page](assets/images/readme-images/game-page.png)
-  1. timer: Upon first click for either player one or player two, the round timer will begin to count down to 0. when the timer hits 0, the winner will be calculated.
-  2. A round counter will count each round as the happen until three rounds have been played.
-  3. A score counter for both players, keeping a log of each win/draw/lose.
-  4. Each player will be prompted for their names when the page has loaded, this will then be assigned to each players section. 
-  5. Both players choices are chosen in this section, they can be chosen while the timer runs, but once it hits zero, they can no longer be changed as the buttons are disabled.
-  6. This section shows the players name and their choice, this updates with every choice and change the player makes until the timer hits zero. 
-  7. This displays the outcome of the round. 
-  8. Next round/Reset button that appears after the winner has been displayed. This allows the player to progress to the next round or reset the game to zero and play again! 
-  9. This section appears once three rounds has been played and displays the winner from a best of three win condition. 
-* Player 1 can play against the computer by entering the name "computer" for player 2. This will let the computer make a choice and not display it until the timer reaches zero. The buttons will also be disabled, so player 1 can't always let themselves win! 
-<br>
-* Social media footer
-  * All pages contain a social media footer that contains all social media links that could link to the game developers pages for exposure. 
-
+![flow chart for game logic](assets/readME_images/flow_chart2.png)
+The above documents a rough flow chart of the game logic/process and streamlined how i would create the project. 
 
 ## Technologies Used 
 
-### Languages Used 
-A Combination of HTML/CSS/Javascript was used for the creation of this site. 
+### Languages & Packages Used 
+![packages](assets/readME_images/packages.png)\
+Python was the sole language used for this terminal game project, utlizing a few imports for the board creation and other useful functions. 
 
-#### Examples of Javascript used 
-* The code below prompts the players for their names, the function checks that the player name did not press the cancel( !=null) button, and then assigns the name value to the playerX.name object key. It also trims any whitespace so that the player does not enter multiple spaces and changes the layout of the page. 
-  * If the player does press cancel, it assigns the value of Player X instead of leaving the player name blank, or causing an error by trying to read a null. 
-```javascript 
-function promptPlayerName() {
-    /* window prompt taking player names, if empty assigns default names */
-    player1.name = window.prompt("player 1 Name:");
-    if (player1.name != null) {
-        player1.name = player1.name.trim();
-        document.getElementById("p1name").innerHTML = player1.name;
-    } else {
-        player1.name = "player 1";
-        document.getElementById("p1name").innerHTML = player1.name;
-    }
-
-    player2.name = window.prompt("player 2 Name:");
-    if (player2.name != null) {
-        player2.name = player2.name.trim();
-        document.getElementById("p2name").innerHTML = player2.name;
-    } else {
-        player2.name = "Player 2";
-        document.getElementById("p2name").innerHTML = player2.name;
-    }
-} 
-```
-
-* The below code determines the name of player 2 and if it is computer, it disables the buttons for player 2. Once the timer hits zero, it triggers a function that generates a random number between zero and four which is mapped to a choice for player 2. It also becomes case insensitive with the toLocaleLowerCase() method and removes whitespace with the trim() method if they accidentally add a space at the end. 
-
-```javascript 
-function disableButtonsP2AI() {
-    /* disables the buttons of player 2 if they are playing against computer */
-    if (player2.name.toLocaleLowerCase().trim() === "computer") {
-        let aiButtons = document.getElementsByClassName("p2button");
-        for (let button of aiButtons) {
-            button.disabled = true;
-        }
-    }
-}
-
-function playAgainstAI() {
-    /* if playing against computer, logic will determine the choice of computer */
-
-    if (!player2.choice) {
-        let aiChoice = Math.floor(Math.random() * 5);
-        switch (aiChoice) {
-            case 0:
-                player2.choice = "rock";
-                break;
-            case 1:
-                player2.choice = "paper";
-                break;
-            case 2:
-                player2.choice = "scissors";
-                break;
-            case 3:
-                player2.choice = "lizard";
-                break;
-            case 4:
-                player2.choice = "spock";
-                break;
-        }
-        updatePlayerUIChoices();
-    }
-}
-``` 
-
-* One particularily interesting technique i learned with creating this is that rather than having a function have one purpose, it can be written in a way that it becomes a toggle switch. The below code uses a global variable called buttonsAllowed which contains a boolean value of true and buttons(globally declared variable containing all button values). When the game is initialised, buttonsAllowed is true so the buttons are clickable, the players can make their first choice and begin the timer. Once this timer hits zero, the toggleButtons function can be called again, disabling all buttons. It can then be called again when the next round is initiated, thus re-enabling the buttons. 
-
-```javascript
-function toggleButtons() {
-    /* toggle function that disables and enables the buttons depending on game state */
-    for (let button of buttons) button.disabled = buttonsAllowed;
-    buttonsAllowed = !(buttonsAllowed);
-}
-```
+* packages:
+  * random for its random number generation methods.
+  * os - system to allow me to use the system('clear') function which clears the terminal window. 
+  * time for the sleep() function which allows a specific block of code to wait a given time in seconds before executing. 
+  * numpy for the creation of 2d arrays and its methods when working with 2d arrays.
 
 ### Libraries & Programs Used
 Github was used as a repository to store website files and code. <br>
