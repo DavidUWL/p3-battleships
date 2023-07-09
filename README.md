@@ -1,8 +1,8 @@
-# Battleships - Terminal Game
-A website designed as a responsive page that allows users to play a modified game of rock paper scissors and view the rules. 
+# Battleship - Terminal Game
+A web based terminal game for a player to play against a computer in a game of battleship. 
 
-![](assets/images/readme-images/hero.png) 
-[Click here to view the game home page](https://daviduwl.github.io/Project-two/)
+![](assets/readME_images/terminal_window.png)\
+[Click here to play the game](https://project-three-battleships-4343f96bbd75.herokuapp.com/)
 
 * [User Experience (UX)](#user-experience-ux)
   * [Initial Discussion](#initial-discussion)
@@ -29,8 +29,8 @@ A website designed as a responsive page that allows users to play a modified gam
 
 ## User Experience (UX)
 ### Initial Discussion
-Rock Paper Scissors Lizard Spock (referred to as RPSLS for short) was designed to be a fun interactive game that can be played with two players
-or against the computer. 
+Battleship is a game usually played with two players, where they place their ships and fire artillery to try and sink the opponents ship. 
+this is a digital rendition of the classic board game. 
  
 
 ### User Stories
