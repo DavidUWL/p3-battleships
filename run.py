@@ -72,9 +72,9 @@ def new_game():
             player2_name = input("Choose a shorter name:")
         clear()
         splash_ascii()
-        print("Here is your board, captain %s! \n your boats are shown as #" % name)
+        print("Here is your board, captain %s! \n Your boats are shown as #" % name)
         print("* Misses are shown as ~")
-        print("** hits are shown as X")
+        print("** Hits are shown as X")
         time.sleep(3)
 
         player.name = name  # assigns names to the player class
@@ -99,6 +99,7 @@ def new_game():
     ):  # takes validated inputs from the player to assign coordinates for boats
         i = 1
         while i < 6:
+            print("Where are the boats captain?")
             y = coordinate_validation(input("pick a row from 1-5:"))
             x = coordinate_validation(input("pick a column from 1-5:"))
             while player.boat_coordinates[y - 1, x - 1] == player.boat["boat1"]["icon"]:  # subtracting 1 for zero indexing
