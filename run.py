@@ -64,7 +64,7 @@ def new_game():
         clear()  # clears the terminal
         splash_ascii()
         player2_name = input(
-            "And what is your enemies name? \n type your enemies name:"
+            "And what is your enemy's name? \n type your enemies name:"
         )
         player2_name = empty_string_validation(player2_name)
 
