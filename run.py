@@ -83,15 +83,17 @@ def new_game():
 
     def get_boat_coordinates(
         player,
-    ):  # takes inputs from the player to assign coordinates for boats
+    ):  # takes validated inputs from the player to assign coordinates for boats
         i = 1
         while i < 6:
             y = coordinate_validation(input("pick a row from 1-5:"))
             x = coordinate_validation(input("pick a column from 1-5:"))
             print(y)
-            y = y - 1  # subtracting 1 for zero indexing
-            x = x - 1  # subtracting 1 for zero indexing
-            player.boat_coordinates[y, x] = player.boat["boat1"]["icon"]
+            while player.boat_coordinates[y - 1, x - 1] == player.boat["boat1"]["icon"]:  # subtracting 1 for zero indexing
+                print("Captain, there's already a boat there.")
+                y = coordinate_validation(input("Pick a new row from 1-5:"))
+                x = coordinate_validation(input("Pick a new column from 1-5:"))
+            player.boat_coordinates[y - 1, x - 1] = player.boat["boat1"]["icon"]
             i += 1
             update_UI()
         return player.boat_coordinates
