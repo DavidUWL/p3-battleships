@@ -70,9 +70,11 @@ def new_game():
         while len(player2_name) > 10:
             print("Are you sure thats the enemy?")
             player2_name = input("Choose a shorter name:")
-        print("Here is your board, captain %s! \n your boats are shown as #" % player2_name)
-        print("Misses are shown as ~")
-        print("hits are shown as X")
+        clear()
+        splash_ascii()
+        print("Here is your board, captain %s! \n your boats are shown as #" % name)
+        print("* Misses are shown as ~")
+        print("** hits are shown as X")
         time.sleep(3)
 
         player.name = name  # assigns names to the player class
