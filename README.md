@@ -52,6 +52,9 @@ disturbing/interrupting the games visuals. This seperation of game-states also m
 ![flow chart for game logic](assets/readME_images/flow_chart2.png)
 The above documents a rough flow chart of the game logic/process and streamlined how i would create the project. 
 
+### Features 
+
+
 ## Technologies Used 
 
 ### Languages & Packages Used 

@@ -3,6 +3,7 @@ import random
 from os import system
 import time
 import numpy as np
+import sys
 
 
 def clear():  # clears terminal/python shell
@@ -268,7 +269,7 @@ def new_game():
             clear()
             new_game()
         elif start_new_game == "N":
-            system.exit()
+            sys.exit()
         else:
             prompt_new_game()
 
