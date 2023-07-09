@@ -131,7 +131,7 @@ def new_game():
         player,
     ):  # plots the boats into the players boat_coardinates and pushes to respective board
         for i in range(player.boat_coordinates.shape[0]):
-            for j in range(player.board.shape[1]):
+            for j in range(player.boat_coordinates.shape[1]):
                 if player.boat_coordinates[i, j] == "#":
                     player.board[i, j] = "#"
         return player.board
@@ -163,13 +163,13 @@ def new_game():
         artillery, boat
     ):  # checks whether the artillery coordinate matches a boat coordinates and changes value accordingly
         hit = np.logical_and(
-            artillery.artillery_coordinates == "!", boat.boat_coordinates == "#"
+            artillery.artillery_coordinates == "!", boat.boat_coordinates == boat.boat["boat1"]["icon"]
         )
         miss = np.logical_and(
             artillery.artillery_coordinates == "!",
-            np.logical_not(boat.boat_coordinates == "#"),
+            np.logical_not(boat.boat_coordinates == boat.boat["boat1"]["icon"]),
         )
-        boat.board[hit] = boat.boat["boat1"]["damaged_icon"]
+        boat.board[hit] = "X"
         boat.board[miss] = "~"
 
     def get_computer_boat_coordinates(
