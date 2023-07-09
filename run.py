@@ -114,7 +114,7 @@ def new_game():
             update_UI()
         return player.boat_coordinates
 
-    def coordinate_validation(value):  # validates coordinates chosen for boats
+    def coordinate_validation(value):
         while True:
             try:
                 value = int(value)

@@ -1,7 +1,7 @@
 # Battleship - Terminal Game
 A web based terminal game for a player to play against a computer in a game of battleship. 
 
-![](assets/readME_images/terminal_window.png)\
+![](assets/readme_images/terminal_window.png)\
 [Click here to play the game](https://project-three-battleships-4343f96bbd75.herokuapp.com/)
 
 * [User Experience (UX)](#user-experience-ux)
@@ -16,7 +16,6 @@ A web based terminal game for a player to play against a computer in a game of b
 * [Deployment & Local Development](#deployment--local-development)
   * [Deployment](#deployment)
 * [Testing](#testing)
-  * [W3C Validator](#w3c-validator)
   * [Solved Bugs](#solved-bugs)
   * [Known Bugs](#known-bugs)
   * [Tesing User Stories](#testing-user-stories)
@@ -27,16 +26,16 @@ A web based terminal game for a player to play against a computer in a game of b
 
 ## User Experience (UX)
 ### Initial Discussion
-Battleship is a game usually played with two players, where they place their ships and fire artillery to try and sink the opponents ship. 
-this is a digital rendition of the classic board game. 
+Battleship is a game usually played with two players, where they place their ships and fire artillery to try and sink the opponent's ship. 
+This is a digital rendition of the classic board game. 
  
 
 ### User Stories
 #### First Time Player Goals
 * To quickly be able to play the game without knowing the rules.
-* for quick gameplay to be carried out, resulting in a fast-paced rewarding feeling when played. 
+* For quick gameplay to be carried out, resulting in a fast-paced rewarding feeling when played. 
 #### Returning Player Goals
-* To be able to play a different game-set everytime - with the computer choosing different locations/artillery calls every game.
+* To be able to play a different game-set every time - with the computer choosing different locations/artillery calls every game.
 
 
 ## Design
@@ -45,20 +44,50 @@ As this game was created to be played via the terminal, there are limitations as
 on screen information, this allows the player to not be distracted and continue focus on the game. 
 
 ### Flow Chart Planning
-![flow chart for visual updates logic](assets/readME_images/flow_chart1.png)\
-When designing how the game would update visuals and process input, i decided on doing a stacked visual process. This allows the game to do all proccessing in the backend without
-disturbing/interrupting the games visuals. This seperation of game-states also makes writing the logic substantially easier. 
+![flow chart for visual updates logic](assets/readme_images/flow_chart1.png) <br>
+When designing how the game would update visuals and process input, i decided on doing a stacked visual process. This allows the game to do all processing in the backend without
+disturbing/interrupting the games visuals. This separation of game-states also makes writing the logic substantially easier. 
 
-![flow chart for game logic](assets/readME_images/flow_chart2.png)
-The above documents a rough flow chart of the game logic/process and streamlined how i would create the project. 
+![flow chart for game logic](assets/readme_images/flow_chart2.png)
+The above documents a rough flow chart of the game logic/process and streamlined how I would create the project. 
 
 ### Features 
+#### Getting the player name
+![Getting the players name](assets/readme_images/name.png)
+* Simple and concise, prompts the player for the names to be used which would be displayed next to the corresponding board. 
+
+#### Getting the placement of the active players boats
+![Getting the placement of the players boats](assets/readme_images/where_boats.png)
+* Prompts the player for a row and column to place their boats, boats are currently limited to a 1x1 placement, and 5 boats in total are used. 
+
+#### Presenting the board and legend
+![Giving legend and presenting board](assets/readme_images/your_boats.png)
+* Presents the legend to the player for their active boats('#'), hits('X') and misses('~'). 
+
+#### Calling the artillery 
+![Calling artillery](assets/readme_images/call_artillery.png)
+* Similiar to the boat locations, prompts for a row and column to fire artillery at. If its a hit or miss, this will be reflected on the board. if the player
+tries to fire at the same location twice, they will be prompted that they have already fired there. 
+
+#### Computer firing coordinates
+![Computer firing coordinates](assets/readme_images/computer_fires.png)
+* Computer will generate a coordinate, validated to not be the same coordinate twice. This will then be printed and board updated to reflect the artillery coordinate. 
+
+#### Presenting the winner/ Play again
+![Presenting winner and play again](assets/readme_images/play_again.png)
+* Winner is presented at the end of a round* if they have destroyed all opponents boats.
+  * *A round is defined as both players calling artillery and board checked for boats, not just a single players turn. 
+
+#### validation 
+![Validation for inputs](assets/readme_images/validation.png)
+* Validation is applied to all user inputs, input cannot be empty and must be within the confines of the board. 
+
 
 
 ## Technologies Used 
 
 ### Languages & Packages Used 
-![packages](assets/readME_images/packages.png)\
+![packages](assets/readme_images/packages.png)\
 Python was the sole language used for this terminal game project, utlizing a few imports for the board creation and other useful functions. 
 
 * packages:
@@ -70,9 +99,10 @@ Python was the sole language used for this terminal game project, utlizing a few
 ### Libraries & Programs Used
 Github was used as a repository to store website files and code. <br>
 Gitpod used as the coding environment with git for version control. <br>
-Google Dev Tools were used for troubleshooting and testing media queries for multiple device viewports. <br>
-Google Fonts used to import website fonts. <br>
-Font awesome used to import icons used throughout the website. <br>
+
+#### ASCII art 
+An ascii art banner was used to make the terminal window a bit more appealing, however i found too much ASCII art to be distracting to the gameplay. Due to only one instance of ASCII art being used, it was defined as a function call. If more ASCII art was used, a package would be imported eg - art. 
+
 
 ## Deployment & Local Development
 
@@ -87,87 +117,96 @@ This can be acheived by following: <br>
 
 ## Forking/Cloning 
 To create a fork for this repository: 
-* Navigate to the url - https://github.com/DavidUWL/Project-two
+* Navigate to the url - https://github.com/DavidUWL/p3-battleships
   * In the top right corner, click on the Fork dropdown. 
   * Create a new fork
   * Name the repository and/or give it a description - Click create fork. 
 * You have now created a fork of this repository! 
+To create a clone of this repository:
+* Navigate to the url - https://github.com/DavidUWL/p3-battleships
+  * Click on the "code" button and select which format you would like to clone with and copy that link.
+  * In your Terminal window of whichever IDE you use, navigate to the whichever directory you want to clone the project to. 
+  * type into the terminal "git clone", you have now cloned the project! 
+
 
 ## Testing
-Throughout the creation of this website build, Google/Chrome dev tools were used to troubleshoot and test different 
-elements as they were added, along with the use of the debugger keyword and variable logging to the console. Dev tools was also used to verify the websites responsiveness across multiple viewing platforms. <br>
+As this game is based in the terminal, and all user interactions are via inputs from the user - validation and testing is incredibly important. All player inputs contain validation, an example being the below:
+
+```python 
+    def coordinate_validation(value):  
+        while True:
+            try:
+                value = int(value)
+                if value < 1 or value > 5:
+                    print("Choose between 1 and 5.")
+                else:
+                    break
+
+            except ValueError:
+                print("Have you forgotten numbers captain!?")
+
+            value = input("choose from 1-5:")
+        return value
+
+```
+The Majority of inputs in this game are integers, so defining a function that validates if the input is an integer and also within the confines of the board seemed appropriate. If the value is not an integer, it will throw a ValueError and print a quip, while also re-promping for a correct type value. 
 <br>
 
-### W3C Validator
-The HTML and CSS code of this site was validated with the use of the W3C validator and jShint. 
-<p>
-    <a href="http://jigsaw.w3.org/css-validator/check/referer">
-        <img style="border:0;width:88px;height:31px"
-            src="http://jigsaw.w3.org/css-validator/images/vcss"
-            alt="Valid CSS!" />
-    </a>
-</p>
+Another example would be the prompt_new_game() function, however its usage is not something i would recommend, but fitted its use case:
 
-![w3 html validated](./assets/images/readme-images/html-w3-validator.png)
-    
-![JShint lintner](./assets/images/readme-images/jshint.jpeg)
+```python 
+    def prompt_new_game():
+        start_new_game = str(input("Would you like to play again? \n Y/N:").upper())
 
+        if start_new_game == "Y":
+            clear()
+            new_game()
+        elif start_new_game == "N":
+            sys.exit()
+        else:
+            prompt_new_game()
+```
+The above is a very low level recursive function, where if the player has not entered either expected input, it will call itself again. I found this an interesting way to implement validation, but if its use case involved multiple interactions i would deem it too dangerous due to its infinite loop nature. 
 
 ### Solved Bugs
-* During the project a few javascript bugs were encountered, namely: <br>
-  * A bug where when playing against the computer, the buttons would not be disabled after the first round. This was countered by having the newRound function call the function that disabled the P2 buttons when a new round starts. 
-  * A bug where the scorecard would not update on reset, this was due to the roundwinner key not being emptied before calling the updateScoreUI() function. 
-  * A bug that made it look like win conditions were being fulfilled, however the updateScoreUI() function was being called too early.
-  * A bug where regardless of the player 2 pick, the computer would force a choice over it, this was remedied by wrapping the playAgainstAI() code block in an if statement that verifies if the player2.choice value is truthy and does not execute. 
+* During the project a few bugs were encountered, namely: <br>
+  * When print f string literals, it was forgotten that i would need to add 1 to the printing of the computer generated artillery coordinates, as they were generated with zero indexing in mind.
+  * A large bug was identified where the board would not update to where player 2 would hit player 1's boats. This was due to a plot_coordinate() function call in the update_UI() function. This was placed so that the users input felt a bit snappier, however would overwrite any UI updates that would be pushed for hits. Once removed this bug was resolved. 
+  * A bug where validation was not being applied to the player2 name, this was due to player2 not being passed as an argument to the function. 
 
 ### Known Bugs
-* During the developement, i used the play against the computer function so that i did not have to constantly select choices for player 2. This helped to test other functions, what i didn't consider was that i needed the option for player two to make no choice at all and the game to default. Currently the game will make a selection for player two if they do not make a choice, i do plan in the future to allow player 2 to make no choice at all and the current round will reset. 
-* Depending on the screen resolution, the home page buttons will be pushed into the footer slightly. This was missed in the testing using dev tools. it will be corrected in a future commit. 
+* At the time of submission, i am not aware of any bugs present.  
 
 ### Testing User Stories 
+
 #### First time Vistor
-* To quickly be able to see the rules and play the game.
-  * Home page directs the user quickly with the minimalist design and large buttons linking to the respective pages. 
-* Have a sense of familiarity with rock paper scissors but learn the extra complexity of the extra two choices.
-  * The game is played just like normal, but the extra two choices are naturally folded in via the game page. 
+* To quickly be able to play the game without knowing the rules.
+  * Players can quickly enter the game, as there are no rules to read, all inputs are prompted when needed with their application. 
+* For quick gameplay to be carried out, resulting in a fast-paced rewarding feeling when played. 
+  * Upon opening the game, all that is required are names and coordinates, the speed at which is is carried out solely depends on the player. 
 #### Returning Visitor
- *  To be able to quickly access the game without needing to read the rules beforehand. 
-   * Play accessible through all navigable pages. 
+ * To be able to play a different game-set everytime - with the computer choosing different locations/artillery calls every game. 
+   * As player boats are chosen by the player and computer boats are placed randomly, the boardset will always be different. The computer will also pick random artillery coordinates for every game. 
 
 ## Full testing
-A number of methods were used to fully test this website.
-* Two browsers were used:
-  * Firefox
-  * Google Chrome
+Extensive manual testing was carried out to validate that all unexpected data types would be caught and reprompt the user for the correct data type, for example:
+* Integers as floating points.
+* inputs that were left empty as opposed to containing coordinates or names.
+* coordinates that were fired the same place twice, which cannot occur in the original game. 
+* Trying to stack boats on top of each other. 
 
-* Three devices were used:
-  * Desktop PC with three different resolution monitors. 
-  * Huawei p30 phone.
-  * Samsung Galaxy Tab A Tablet.
-
-* Links 
-  1. Home page buttons and nav bar links interacted with across multiple device resolutions to maintain usability with media query restructuring. 
-  2. Footer links tested that they link to their corresponding websites. testing that when the link is interacted with, it opens a new window to allow the user to maintain their position on the current website. 
-
-* Game section choice options
-  * all choices interacted with from both opening positions of player one and player two. 
-  * Verified that if player playing is playing against computer, that player 2 buttons are disabled. 
-  * When each round ends, that all buttons are disabled. 
-  * Tested all buttons across different screen resolutions to verify media queries do not interfere with interactions. 
+### Lintner
+All code passes through the Code Institute lintner with no errors, except for line length which is not deemed as excessive. 
 
 
 ## credits
 ### Content
-All content on this site was written by myself for the game RPSLS. 
+All content for this game was created and written by me - David Kirby.
 
 ## Media
-All images on this site were used with the permission of the owners/people involved. 
+[ASCII.co.uk](https://ascii.co.uk/art/battleship) ASCII for the ASCII banner.
 
-[Akshay bahadur image](https://static.wixstatic.com/media/903056_39aa9523c70a428684be9744580b0b1b~mv2.png/v1/fill/w_844,h_844,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/903056_39aa9523c70a428684be9744580b0b1b~mv2.png) <br>
- ![usage request](./assets/images/readme-images/akshay-credit.png)<br>
  
-
 ## Acknowledgments
-[Aleks G](https://stackoverflow.com/a/66565163) For the excellent tip on flex box footer formatting. <br> 
 [Derek Mcauley](https://github.com/derekmcauley7) For his guidance as my Code Institute mentor. <br>
-[kera cudmore](https://github.com/kera-cudmore/readme-examples/blob/main/milestone1-readme.md) For her fantastic Readme Template.
+[Kera cudmore](https://github.com/kera-cudmore/readme-examples/blob/main/milestone1-readme.md) For her fantastic Readme Template.
