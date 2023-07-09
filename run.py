@@ -55,9 +55,7 @@ def new_game():
     player1 = Player()
     player2 = Player()
 
-    def get_names(
-        player, player2
-    ):  # gets each players name and assigns to player.name
+    def get_names(player, player2):  # gets each players name and assigns to player.name
         name = input("what is your name captain? \n type your name:")
         name = empty_string_validation(name)
         while len(name) > 10:
@@ -65,7 +63,9 @@ def new_game():
             name = input("Choose a shorter name:")
         clear()  # clears the terminal
         splash_ascii()
-        player2_name = input("And what is your enemies name? \n type your enemies name:")
+        player2_name = input(
+            "And what is your enemies name? \n type your enemies name:"
+        )
         player2_name = empty_string_validation(player2_name)
 
         while len(player2_name) > 10:
@@ -81,14 +81,13 @@ def new_game():
         player.name = name  # assigns names to the player class
         player2.name = player2_name
 
-    def empty_string_validation(name): 
+    def empty_string_validation(name):
         while name.strip() == "":
             print("I can't hear you captain!")
             name = input("Choose a longer name:")
         return name
 
     def update_UI():  # updates the boards visuals
-        plot_coordinates(player1)
         clear()
         splash_ascii()
         clean_player_boards(player2)
@@ -103,12 +102,15 @@ def new_game():
             print("Where are the boats captain?")
             y = coordinate_validation(input("pick a row from 1-5:"))
             x = coordinate_validation(input("pick a column from 1-5:"))
-            while player.boat_coordinates[y - 1, x - 1] == player.boat["boat1"]["icon"]:  # subtracting 1 for zero indexing
+            while (
+                player.boat_coordinates[y - 1, x - 1] == player.boat["boat1"]["icon"]
+            ):  # subtracting 1 for zero indexing
                 print("Captain, there's already a boat there.")
                 y = coordinate_validation(input("Pick a new row from 1-5:"))
                 x = coordinate_validation(input("Pick a new column from 1-5:"))
             player.boat_coordinates[y - 1, x - 1] = player.boat["boat1"]["icon"]
             i += 1
+
             update_UI()
         return player.boat_coordinates
 
@@ -163,7 +165,8 @@ def new_game():
         artillery, boat
     ):  # checks whether the artillery coordinate matches a boat coordinates and changes value accordingly
         hit = np.logical_and(
-            artillery.artillery_coordinates == "!", boat.boat_coordinates == boat.boat["boat1"]["icon"]
+            artillery.artillery_coordinates == "!",
+            boat.boat_coordinates == boat.boat["boat1"]["icon"],
         )
         miss = np.logical_and(
             artillery.artillery_coordinates == "!",
