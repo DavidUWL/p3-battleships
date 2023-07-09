@@ -194,7 +194,7 @@ def new_game():
             if player.artillery_coordinates[y, x] != "!":
                 player.artillery_coordinates[y, x] = "!"
                 break
-        print("Computer fires at: {y}, {x}")
+        print(f"Computer fires at: {y}, {x}")
         time.sleep(1)  # 1 second wait time before code executes to delay gameplay
         return player.artillery_coordinates
 
